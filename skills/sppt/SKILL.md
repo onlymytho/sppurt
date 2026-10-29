@@ -1,13 +1,13 @@
 ---
 name: sppt
 description: |
-  shopport CLI 도움말 + 사용 가능한 스킬 목록.
-  Use when asked to "sppt", "shopport 뭐 할 수 있어?", "스킬 목록", "커맨드 알려줘".
+  Sppurt CLI 도움말 + 사용 가능한 스킬 목록.
+  Use when asked to "sppt", "Sppurt 뭐 할 수 있어?", "스킬 목록", "커맨드 알려줘".
 ---
 
-# shopport (sppt)
+# Sppurt (sppt)
 
-> AI를 위한 이커머스 운영도구 — 사장님이 뽑으려던 운영 담당자, shopport가 대신합니다.
+> AI를 위한 이커머스 운영도구 — 사장님이 뽑으려던 운영 담당자, Sppurt가 대신합니다.
 
 ## Quick Start
 

@@ -1,13 +1,13 @@
 ---
 name: sppt-dashboard
 description: |
-  shopport 운영 대시보드를 브라우저에서 띄우는 스킬.
+  Sppurt 운영 대시보드를 브라우저에서 띄우는 스킬.
   Use when asked to "대시보드", "dashboard", "현황판 보여줘".
 ---
 
 # dashboard
 
-shopport 웹 대시보드를 로컬에서 띄워 브라우저로 확인하는 워크플로우.
+Sppurt 웹 대시보드를 로컬에서 띄워 브라우저로 확인하는 워크플로우.
 
 ## When to use
 

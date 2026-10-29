@@ -1,13 +1,13 @@
 ---
 name: shopport
 description: |
-  shopport CLI 도움말 + 사용 가능한 스킬 목록. /sppt와 동일한 역할.
-  Use when asked to "shopport", "shopport 도움말", "shopport 뭐야".
+  Legacy /shopport alias for Sppurt CLI help and skill discovery. /sppt remains canonical.
+  Use when asked about "shopport", "Sppurt help", or available skills.
 ---
 
-# shopport
+# Sppurt (legacy /shopport alias)
 
-> `/sppt` 스킬과 동일합니다. shopport CLI 도움말 + 스킬 목록을 보려면 아래를 실행하세요.
+> `/sppt` 스킬과 동일합니다. Sppurt CLI 도움말 + 스킬 목록을 보려면 아래를 실행하세요.
 
 먼저 CLI 도움말을 확인합니다:
 
@@ -30,7 +30,7 @@ sppt auth whoami
 
 | 스킬 | 설명 |
 |---|---|
-| `/sppt` | shopport 전체 도움말 + 스킬 목록 |
+| `/sppt` | Sppurt 전체 도움말 + 스킬 목록 |
 | `/sppt-daily-report` | 매일 아침 매출/주문 브리핑 |
 | `/sppt-order-collect` | 멀티채널 주문 한번에 모아보기 |
 | `/sppt-order-fulfill` | 주문 확인 → 소싱 발주 → 송장 등록 |

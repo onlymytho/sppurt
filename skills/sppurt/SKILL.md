@@ -1,0 +1,234 @@
+---
+name: sppurt
+description: |
+  Sppurt 제품과 CLI 사용법, 사용 가능한 스킬 목록을 안내합니다.
+  Use when asked about "Sppurt", "sppt", available skills, or CLI commands.
+---
+
+# Sppurt CLI
+
+> CLI 명령은 `sppt`입니다. 전체 도움말과 사용 가능한 스킬을 확인할 수 있습니다.
+
+## Quick Start
+
+```bash
+sppt --help          # CLI 전체 도움말
+sppt status          # 채널 연결 상태 확인
+sppt context         # AI용 스토어 브리핑
+sppt crm cafe24 groups     # cafe24 회원등급 조회
+sppt crm cafe24 customers  # cafe24 회원목록 조회
+```
+
+## 사용 가능한 스킬
+
+| 스킬 | 설명 |
+|---|---|
+| `/sppt-daily-report` | 매일 아침 매출/주문 브리핑 |
+| `/sppt-order-collect` | 멀티채널 주문 한번에 모아보기 |
+| `/sppt-order-fulfill` | 주문 확인 → 소싱 발주 → 송장 등록 |
+| `/sppt-source-to-register` | 소싱 검색 → 마진 계산 → 판매 채널 등록 |
+| `/sppt-waterfall-source` | 3개 소싱채널 워터폴 가격 비교 |
+| `/sppt-product-sync` | 소싱→판매 배치 상품 동기화 |
+| `/sppt-product-parse` | 상품명 → SKU/카테고리/제품라인 해체 |
+| `/sppt-inventory-sync` | 멀티채널 재고 분배 + 동기화 |
+| `/sppt-price-monitor` | 소싱가 변동 감지 → 마진 체크 → 판매가 조정 |
+| `/sppt-weekly-analysis` | 전주 대비 매출 변화 원인 분석 + 채널 수수료 최적화 |
+| `/sppt-settlement-report` | 정산 현황 조회 + 수익 요약 |
+| `/sppt-settlement-deposit` | 통장 입금 CSV 임포트 → 정산 대사 |
+| `/sppt-policy-ask` | PG사·판매채널 수수료·정산 정책 Q&A |
+| `/sppt-cost-calc` | 원가/마진/수수료 계산 |
+| `/sppt-cost-register` | SKU 원가 등록·관리 |
+| `/sppt-trend-research` | 트렌드 키워드 리서치 |
+| `/sppt-dashboard` | 운영 대시보드 띄우기 |
+| `/sppt-status-check` | 전채널 연결 + 건강 체크 |
+| `/sppt-update` | CLI 버전 업데이트 + 릴리즈 노트 확인 |
+
+## CLI 커맨드 요약
+
+### 설정
+- `sppt init [channel]` — 채널 온보딩 (`--json`, `--local`, `--terminal`)
+  - 비대화형 채널 연결 (AI 에이전트용 — 플래그로 크리덴셜 전달 시 프롬프트 없이 바로 저장+테스트):
+    - `sppt init smartstore --client-id <id> --client-secret <secret>`
+    - `sppt init coupang --vendor-id <id> --access-key <key> --secret-key <secret> [--vendor-user-id <id>]`
+    - `sppt init shopify --store-domain <domain> --access-token <token> [--api-version <ver>]`
+    - `sppt init toss-shopping --client-id <id> --client-secret <secret>`
+    - `sppt init 29cm --client-id <id> --client-secret <secret> --partner-key <key>`
+    - `sppt init musinsa --api-key <key> --api-secret <secret>`
+- `sppt auth login` — 브라우저 OAuth 로그인
+- `sppt auth login --no-browser` — 원격/헤드리스 환경의 device code 로그인
+- `sppt auth token create --name <name> [--ttl-days 30]` — 에이전트용 토큰 발급
+- `printf %s "$SHOPPORT_AGENT_TOKEN" | sppt auth token set --stdin` — 브라우저 없이 agent token 등록·서버 검증
+- `sppt auth token remove` — 이 기기에 등록한 agent token만 제거 (서버 폐기 아님)
+- `sppt auth token list|revoke <id>` — 에이전트 토큰 목록/폐기
+- `sppt auth logout` — 세션 초기화
+- `sppt auth whoami` — 현재 로그인 계정 확인
+- `sppt auth cafe24 --mall <id> --client-id <id> --client-secret <secret>` — Cafe24 토큰 재발급
+- `sppt config list|get|set|remove` — 설정 관리
+- `sppt setup-skills` — Claude Code 스킬 설치 (`uninstall`로 제거)
+
+### 상태/모니터링
+- `sppt status` / `sppt health` — 채널 연결 헬스체크 (`--suppliers`, `--check`)
+- `sppt context [--json]` — AI용 스토어 브리핑
+- `sppt dashboard` / `sppt dash` — 웹 대시보드 (`--local`)
+- `sppt cap [channel]` — 채널별 API 기능 지원 현황
+- `sppt budget [set <channel> <limit>]` — API 사용량/제한 관리
+- `sppt log [--days N]` — 작업 이력
+
+### 상품
+- `sppt product list <channel> [--limit N] [--search <term>]` — 상품 목록
+- `sppt product list [channel] --from-orders` — 주문 기반 크로스채널 상품 조회
+- `sppt product get <channel> <productId>` — 상품 상세
+- `sppt product register <channel> --file <path>` — 상품 등록 (`--all-channels`로 전채널 동시 등록)
+- `sppt product update <channel> <productId> --file <path>` — 상품 수정
+- `sppt product status <channel> <productId>` — 상품 상태 확인
+- `sppt product delete <channel> <productId>` — 상품 삭제
+- `sppt product sync <from> <to> <id> [--markup N]` — 단건 채널 간 복사
+- `sppt product sync-batch <from> <to> [--ids ...] [--all] [--markup N]` — 배치 복사
+- `sppt product keyword get|set|support` — 검색 키워드/태그 관리
+- `sppt product seo get|set|support` — SEO 메타데이터 관리
+- `sppt product fields get|set|apply cafe24` — Cafe24 SEO/discovery 필드 안전 조회·수정
+- `sppt product image get|set|add|delete|support` — 이미지 관리
+- `sppt product parse` / `sppt product parse --dry-run` — 상품 intake 기본 미리보기
+- `sppt product parse --apply --confirm [--run-id <runId>]` — 확실한 기존 옵션 매핑 적용
+- `sppt product parse status <runId>` — 실행 결과·pending·충돌 상태 조회
+- `sppt product master list|create|update` — 마스터 상품 관리
+- `sppt product master option list|create|update` — 마스터 상품 옵션·BOM 관리
+- `sppt product master classification list|create|update|archive|restore` — 분류 관리
+- `sppt product mapping unmapped` — durable 미매핑 검토 큐 조회
+- `sppt product mapping map|unmap <sourceOfferingId>` — preview 후 confirm하는 매핑 변경
+- `sppt product mapping history` — 매핑 변경 이력 조회
+- `sppt product mapping rollback` — `--changeset <changeSetId> --confirm` 또는
+  `--at <timestamp> --confirm`으로 이력 기반 rollback
+- `sppt product mapping rules show|set|publish` — `product_rules` 정책 lifecycle
+
+### 주문/송장
+- `sppt order list|get|confirm|cancel|return <channel>` — 주문 관리
+- `sppt order add <channel> --product "name" --price N [--qty N] [--date DATE]` — 수동 주문 추가
+- `sppt order remove <orderId>` — 수동 주문 삭제
+- `sppt order delete [--ids ...] [--channel <ch>] [--from DATE] [--to DATE]` — 벌크 삭제
+- `sppt order exclude <id> [id...] [--ids id1,id2] [--reason "사유"] [--inventory-deduction]` — 최대 100건을 매출 집계에서 제외 (`--inventory-deduction` 지정 시 재고 차감 유지)
+- `sppt order include <id> [id...] [--ids id1,id2]` — 최대 100건 제외 해제
+- `sppt order excluded` — 제외된 주문 목록
+- `sppt invoice register <channel> <orderId> <carrier> <tracking>` — 송장 등록
+
+### 재고
+- `sppt inventory sync <channel> <productId> <qty> [--delta] [--location <id>]` — 재고 수량 업데이트
+- `sppt inventory plan <totalStock> [sku] [--buffer N] [--ratio ...]` — 채널별 재고 분배 계획
+- `sppt inventory bundle add <bundleSku> <componentSku> --qty N` — 세트 구성 등록
+- `sppt inventory bundle list [bundleSku]` — 세트 구성 조회
+- `sppt inventory bundle remove <bundleSku> <componentSku>` — 세트 구성 삭제
+
+### 소싱
+- `sppt source search <channel> <keyword> [--page N]` — 소싱 상품 검색
+- `sppt source search <channel> <keyword> --waterfall [--strategy first|best]` — 멀티채널 워터폴 검색
+- `sppt source detail <channel> <productId> [--market-check]` — 소싱 상품 상세
+- `sppt source register <channel> <productId> <sellingChannel> [--markup N] [--dry-run]` — 소싱→판매채널 등록
+- `sppt source market-check <keyword> [--price N]` — 시장 경쟁도 체크
+- `sppt source verify-supplier <channel> <productId>` — 공급사 신뢰도 검증
+- `sppt source categories <channel>` — 소싱 채널 카테고리 탐색
+- `sppt source history [--tier 🟢|🟡|🔴] [--channel C] [--limit N]` — 소싱 이력
+- `sppt source route <orderId> --keyword <kw> [--qty N] [--strategy first|best]` — 최적 공급사 라우팅
+- `sppt source score record <sourceChannel> --on-time [--return]` — 공급사 성과 기록
+
+### 정산
+- `sppt settlement calc [--channel C] [--from DATE] [--to DATE]` — 정산 계산
+- `sppt settlement list [channel] [--days N] [--status S]` — 정산 목록
+- `sppt settlement summary [channel] [--days N] [--from DATE] [--to DATE]` — 채널별 정산 합계
+- `sppt settlement fee list|set|remove` — 수수료 규칙 관리
+- `sppt settlement fee-check <channel> [--annual-revenue N] [--payment METHOD]` — 적용 수수료율 확인
+- `sppt settlement hints <channel>` — 정산 불일치 사유 조회
+- `sppt settlement refund <channel> <orderId> --amount N --commission N --pg N` — 환불 공제 계산
+- `sppt settlement schedule [--from DATE] [--to DATE]` — 예정 정산일 조회
+- `sppt settlement detail [--from DATE] [--to DATE] [--provider NAME]` — 입금 상세 내역
+- `sppt settlement reconcile <channel>` — 정산 대사
+- `sppt settlement deposit <file> [--bank ...] [--dry-run]` — 은행 입금 CSV 임포트 (KB·신한·우리·하나)
+- `sppt settlement deposit delete --date <날짜> --provider <입금처>` — 입금 내역 삭제
+- `sppt settlement pg-compare <channel> --amount N [--annual-revenue N]` — PG 수수료율 비교
+- `sppt settlement policy search <term> [--channel C] [--type T]` — 정산 정책 검색
+
+### 원가
+- `sppt cost set <skuId> --purchase <N> [--shipping N] [--packaging N] [--fulfillment N]` — 원가 설정
+- `sppt cost list [--channel C]` — 원가 목록
+- `sppt cost show <skuId> [--channel C]` — 원가 상세
+- `sppt cost remove <skuId> [--channel C]` — 원가 삭제
+
+### 가격/쿠폰
+- `sppt price set <channel> <productId> <price> [--sale-price N]` — 가격 변경
+- `sppt price variant shopify <variantId> <price> [--compare-at N]` — Shopify 옵션가 변경
+- `sppt price support` — 채널별 가격 기능 지원 현황
+- `sppt coupon list cafe24 [--name <검색어>] [--json]` — 카페24 쿠폰 목록 + 다운로드 URL
+- `sppt coupon get cafe24 <coupon_no> [--json]` — 카페24 쿠폰 상세
+- `sppt coupon issues cafe24 <coupon_no> [--member <member_id>] [--order-status <status>] [--json]` — 쿠폰 발급내역 조회
+- `sppt coupon revoke cafe24 <member_id> <coupon_no> [--confirm]` — 회원 쿠폰 회수 (`--confirm` 없으면 dry-run)
+- `sppt coupon link cafe24 <coupon_no[,coupon_no...]> [--domain <domain>] [--copy]` — 쿠폰 다운로드 URL 조립
+- `sppt coupon create <channel> --name <name> --type <type> --value <N>` — 쿠폰 생성
+- `sppt coupon issue <channel> <couponId> --members <id1,id2,...>` — 쿠폰 발급
+- `sppt coupon support` — 채널별 쿠폰 기능 지원 현황
+
+### CRM
+- `sppt crm cafe24 groups [--group-no <no>] [--group-name <name>] [--json]` — cafe24 회원등급 조회
+- `sppt crm cafe24 customers [--limit N] [--offset N] [--group-no <no>] [--created-start-date YYYY-MM-DD] [--json]` — cafe24 회원목록 조회
+- `sppt crm cafe24 customer <member_id> [--json]` — cafe24 단일 회원 상세 조회
+- `sppt crm cafe24 group assign <member_id> --group-no <no> [--fixed] [--dry-run]` — cafe24 회원등급 지정
+- `sppt crm balance` — cafe24 SMS 잔액·발신번호 상태
+- `sppt crm sms send --content "본문" [--to <phone> | --member <id> | --group <no>]` — cafe24 SMS 발송
+
+### 분석/리포트
+- `sppt trend keyword <keyword> [--volume] [--trend] [--months N]` — 검색량 + 트렌드
+- `sppt trend compare <kw1> <kw2> [kw3...]` — 키워드 비교
+- `sppt trend platform <platform> [--category C] [--limit N]` — 전문몰 랭킹
+- `sppt trend coverage [--min-volume N]` — 카탈로그 키워드 커버리지 분석
+- `sppt report revenue [--period <period>]` — 크로스채널 매출 요약
+- `sppt report --by <category|productline|product|channel|sku>` — 다차원 매출 리포트
+  - 기본 매출 기준은 Overview와 동일: 주문 최종 결제금액, 취소·반품·미결제·수동 제외 주문 제외
+  - 주문 수는 `(채널, 주문번호)` 기준 고유 주문 수이며, `--json`의 `metricBasis`에서 집계 기준 확인 가능
+  - `--explain` — SKU별 수량 기여 분해 (직접주문 vs 세트전개)
+  - `--include-excluded` — 수동 제외 주문만 다시 포함 (취소·반품·미결제는 계속 제외)
+- `sppt report compare --by <dim> --period <period>` — 기간 대비 비교 분석
+- `sppt report daily [--period N] [--top N]` — 일간 리포트
+- `sppt report weekly [--period N] [--top N]` — 주간 리포트
+- `sppt analytics cafe24 visitors [--period 7d] [--device total] [--format day] [--json]` — cafe24 방문자수 조회
+- `sppt analytics cafe24 visitpaths [--type domains|ads|keywords] [--period 7d] [--json]` — cafe24 유입경로 조회
+
+### 광고
+- `sppt ads naver-sa campaigns [--json]` — 네이버 검색광고 캠페인 목록
+- `sppt ads naver-sa ads --adgroup <adgroupId> [--json]` — 소재 목록 + 연결 URL 조회
+- `sppt ads naver-sa ad --id <adId> [--json]` — 소재 단건 조회
+- `sppt ads naver-sa ad lock --id <adId> --lock true|false [--dry-run]` — 소재 ON/OFF
+- `sppt ads naver-sa ad update --id <adId> --fields <fields> --file <json> [--dry-run]` — 소재 필드 수정
+
+### 물류
+- `sppt logistics status` — 물류 채널 연결 상태
+- `sppt logistics orders <channel> [--since DATE] [--status STATUS]` — 물류 주문 조회
+- `sppt logistics ship <channel> <orderId> <carrierCode> <trackingNumber>` — 출고 등록
+- `sppt logistics bulk <channel> --file shipments.json` — 벌크 출고 등록
+- `sppt logistics stock <channel> [--sku SKU1,SKU2]` — 재고 수량 조회
+
+### 유틸리티
+- `sppt import <file>` — CSV/엑셀 임포트
+- `sppt migrate cloud` — 로컬 데이터 → 클라우드 DB 마이그레이션
+- `sppt issue "title" [--body "description"]` — GitHub Issue 버그 리포트 생성
+
+## 판매 채널
+cafe24, coupang, smartstore, shopify, toss-shopping, 29cm, musinsa
+
+## 소싱 채널
+domemae (위탁), domeggook (사입), specialoffer, cjdropshipping, 1688
+
+## 물류 채널
+dada-erp, ezadmin, onewms, sabangnet, boxhero, ecount-erp, douzone-wehago, playauto, argo, poomgo
+
+### Meta 광고·자동운영 및 프로모션 CLI
+
+- `sppt ads meta --help` — 계정·성과·손익·규칙·판단·승인·실행·감사 기록.
+- `sppt ads meta evaluations list --account <id> --all --json` — 전체 판단 이력(기록 날짜 필터 UTC).
+- `sppt ads meta rules get <id> --account <id> --json` / `rules versions <id> --account <id> --all --json` — 초안/게시/적용 버전.
+- 규칙은 `rules save --file <json>` → `preview` → `publish` → `bind` 순서. 수정에는 조회한 `--revision`, 적용에는 `--version`을 명시한다.
+- 승인 결정과 `execute`에는 조회·검토한 `--plan-hash`가 필요하다. 실행은 관리자·실행 scope·별도 서버 grant·한도를 모두 검증한다. 승인과 실행을 혼동하지 않는다.
+- `sppt ads meta sync --account <id> --from <date> --to <date>`와 `sppt cost sync meta-ads`는 수집/판단 결과를 표시하고 수동 경로에서 광고 변경을 실행하지 않는다.
+- `sppt ads meta executions reconcile <id> --account <id>` — 미확정 실행을 재조회한다. timeout을 이유로 execute를 자동 재전송하지 않는다.
+- `sppt promotions --help` — 행사 목록·생성·수정·preview·publish·cancel·archive·projection-runs. 변경은 `--idempotency-key`, 수정은 `--revision`, 게시는 `--preview-token`이 필요하다.
+- `sppt ads competitors --help` — 경쟁사 광고와 추적 브랜드. 자사 성과와 구분한다.
+- `sppt cap ads --json`, `sppt cap promotions --json` — 명령군 지원 범위.
+- 제한 토큰: `sppt auth token create --name <name> --scope ads:read,promotions:read` (기존 토큰 관리 권한 필요). 쓰기/실행은 별도 `ads:write`, `ads:execute`, `promotions:write`로 한정한다.
+- `--json`은 단일 JSON stdout, `--all`은 커서를 완주한다. 미확인/불완전/부분실패를 0이나 성공으로 취급하지 않는다. 광고·프로모션 원장은 cloud 전용이다.

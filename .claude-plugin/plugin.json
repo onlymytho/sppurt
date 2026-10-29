@@ -1,6 +1,6 @@
 {
-	"name": "shopport",
-	"description": "AI를 위한 이커머스 운영도구 — 쿠팡, 스마트스토어, 카페24, Shopify 통합 관리. 주문 수집, 발주, 정산, 재고 동기화, 소싱, 트렌드 리서치까지.",
+	"name": "sppurt",
+	"description": "Sppurt — AI를 위한 이커머스 운영도구. 쿠팡, 스마트스토어, 카페24, Shopify의 주문·정산·재고·소싱을 관리합니다.",
 	"version": "0.1.12",
 	"author": {
 		"name": "워킨온 (onlymytho)",

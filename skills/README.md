@@ -1,4 +1,4 @@
-# shopport Skills
+# Sppurt Skills
 
 > Claude Code가 읽고 실행하는 커머스 운영 워크플로우 스킬
 
@@ -7,7 +7,7 @@
 ### 자동 설치 (npm 설치 시 자동 등록)
 
 ```bash
-npm install -g shopport
+npm install -g sppurt
 ```
 
 설치 완료 후 `~/.claude/skills/`에 스킬이 자동 등록됩니다.
@@ -25,7 +25,8 @@ sppt setup-skills uninstall # 스킬 제거
 
 | 스킬 | 설명 |
 |---|---|
-| `/sppt` | shopport 전체 도움말 + 스킬 목록 |
+| `/sppt` | Sppurt 전체 도움말 + 스킬 목록 |
+| `/sppurt` | Sppurt 브랜드 도움말 + CLI 스킬 목록 |
 | `/shopport` | `/sppt`와 동일 (별칭) |
 
 ### 주문
@@ -78,7 +79,7 @@ sppt setup-skills uninstall # 스킬 제거
 
 ## 전제 조건
 
-- `sppt` CLI 설치 (`npm install -g shopport`)
+- `sppt` CLI 설치 (`npm install -g sppurt`)
 - 최소 1개 판매 채널 + 1개 소싱 채널 설정 (`sppt init`)
 
 ## 스킬 구조
@@ -90,7 +91,8 @@ Claude Code가 `~/.claude/skills/`에서 자동으로 발견하여 슬래시 커
 ```
 ~/.claude/skills/
 ├── sppt/SKILL.md              → /sppt
-├── shopport/SKILL.md          → /shopport
+├── shopport/SKILL.md          → /shopport (legacy alias)
+├── sppurt/SKILL.md            → /sppurt
 ├── sppt-order-collect/SKILL.md → /sppt-order-collect
 ├── sppt-order-fulfill/SKILL.md → /sppt-order-fulfill
 └── ...

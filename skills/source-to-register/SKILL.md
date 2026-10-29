@@ -63,12 +63,12 @@ sellingPrice = wholesalePrice × 마진배수 + 배송비
 }
 ```
 
-JSON 파일을 `/tmp/shopport-register-<timestamp>.json`에 저장합니다.
+JSON 파일을 `/tmp/sppurt-register-<timestamp>.json`에 저장합니다.
 
 ### 4. 판매 채널에 등록
 
 ```bash
-sppt product register <sellingChannel> --file /tmp/shopport-register-<timestamp>.json
+sppt product register <sellingChannel> --file /tmp/sppurt-register-<timestamp>.json
 ```
 
 등록 결과에서 채널 상품 ID를 확인합니다.

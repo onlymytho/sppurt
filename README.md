@@ -11,7 +11,7 @@
 
 ### AI를 위한 이커머스 운영도구
 
-**사장님이 뽑으려던 이커머스 운영 담당자, shopport가 대신합니다.**
+**사장님이 뽑으려던 이커머스 운영 담당자, Sppurt가 대신합니다.**
 
 쿠팡 · 스마트스토어 · 카페24 · Shopify
 
@@ -33,7 +33,7 @@ macOS · Linux 지원 · bun / npm 자동 감지
 - 신상품 등록할 때마다 채널마다 같은 내용을 반복 입력하고 있다면
 - 주문 CSV를 취합하는 데 매일 30분을 쓰고 있다면
 
-#### 이제 여러분이 사용하던 AI Agent가 shopport로 모든 걸 대신할 수 있습니다.
+#### 이제 여러분이 사용하던 AI Agent가 Sppurt로 모든 걸 대신할 수 있습니다.
 
 | # | 담당자 | 대체하는 작업 |
 |---|--------|-------------|
@@ -79,7 +79,7 @@ sppt product sync        # 가격·재고 전 채널 동기화
 
 사람 개입 없이 소싱부터 발주·송장 등록까지 에이전트가 직접 운영합니다.
 ```
-"shopport로 내 커머스 운영 매니저가 되어줘"
+"Sppurt로 내 커머스 운영 매니저가 되어줘"
 ```
 
 ---
@@ -102,7 +102,7 @@ sppt product sync        # 가격·재고 전 채널 동기화
                       원가 입력 → 채널·SKU별 마진율·공헌이익 자동 계산
 ```
 
-수동 운영 3시간 → shopport 10분.
+수동 운영 3시간 → Sppurt 10분.
 
 ---
 
@@ -113,13 +113,15 @@ sppt product sync        # 가격·재고 전 채널 동기화
 curl -fsSL https://shopport.vercel.app/api/v2/cli/install | bash; exec $SHELL
 
 # npm
-npm install -g shopport
+npm install -g sppurt
 
 # bun
-bun add -g shopport
+bun add -g sppurt
 ```
 
-설정 파일은 `~/.shopport/config.json`에 로컬 저장됩니다.
+설정 파일은 `~/.sppurt/config.json`에 로컬 저장됩니다.
+
+기존 `shopport` 패키지를 사용 중이면 먼저 `npm uninstall -g shopport`를 실행한 뒤 설치하세요. 기존 `~/.shopport` 데이터는 첫 실행 때 `~/.sppurt`로 복사되며 원본은 자동 삭제되지 않습니다.
 
 ---
 
@@ -162,7 +164,7 @@ sppt context
 
 채널별 주문 CSV 개별 다운로드 → 채널마다 다른 컬럼 양식 수동 정리. **매일 30분.**
 
-**shopport로 바뀌는 것**
+**Sppurt로 바뀌는 것**
 
 ```sh
 sppt order list <channel> [--days N]   # 전 채널 주문 통합 조회
@@ -192,7 +194,7 @@ sppt import <file>                     # CSV/XLS 자동 감지 → 채널 판별
 
 채널별 정산 내역 개별 다운로드 → 수수료 구조 파악 → 엑셀에서 직접 계산 → 입금 스케쥴 관리 **주 3~4시간.**
 
-**shopport로 바뀌는 것**
+**Sppurt로 바뀌는 것**
 
 ```sh
 sppt settlement summary [channel] [--days N]   # 채널별 정산 합계
@@ -215,7 +217,7 @@ sppt settlement schedule                       # 입금 예정 스케줄
 
 쿠팡·스마트스토어·카페24 수수료를 자동 파싱해 실수령액을 계산합니다. 입금 예정일을 채널별로 미리 확인하고, 누락·미입금 정산은 자동으로 플래그.
 
-> *"정산 엑셀 만지는 데 주 3~4시간 쓰고 계시면, 그거 shopport가 5분으로 줄여드립니다."*
+> *"정산 엑셀 만지는 데 주 3~4시간 쓰고 계시면, 그거 Sppurt가 5분으로 줄여드립니다."*
 
 ---
 
@@ -225,7 +227,7 @@ sppt settlement schedule                       # 입금 예정 스케줄
 
 채널별 매출 CSV 개별 다운로드 → 엑셀 피벗으로 일·주·월별 집계 → 채널/SKU/카테고리별 성과 비교 → 경영진 보고용 자료 재가공.
 
-**shopport로 바뀌는 것**
+**Sppurt로 바뀌는 것**
 
 ```sh
 sppt report revenue                                       # 오늘 전 채널 통합 매출
@@ -250,7 +252,7 @@ sppt report --by productline --period 3m                # 제품라인별 3개�
 
 원가·수수료·광고비·물류비 채널별 수동 입력 → 채널별 마진율 엑셀 수식 관리 → 수익성 낮은 채널·SKU 파악.
 
-**shopport로 바뀌는 것**
+**Sppurt로 바뀌는 것**
 
 ```sh
 sppt cost set <sku>    # SKU별 원가 등록
@@ -271,7 +273,7 @@ sppt cost list         # 채널·SKU별 공헌이익 현황
 
 신상품 쿠팡에 입력 → 스마트스토어에 또 입력 → 카페24에 또 입력 → 가격·재고 변경 시 채널마다 개별 수정.
 
-**shopport로 바뀌는 것**
+**Sppurt로 바뀌는 것**
 
 ```sh
 sppt product register --all-channels --file product.json   # 전 채널 일괄 등록
@@ -282,7 +284,7 @@ sppt product keyword set <channel> <id> --tags <kw>        # 검색 키워드 �
 
 상품 마스터 한 번 입력으로 채널별 양식을 자동 변환해 일괄 배포합니다.
 
-채널마다 필수 입력 항목이 다르고, 브랜드명·용량·성분 같은 항목은 직접 찾아 입력하기 번거롭습니다. shopport는 AI가 상품 상세페이지 이미지를 직접 읽어 브랜드명·규격·고시정보 등 누락 항목을 자동으로 채워 넣습니다.
+채널마다 필수 입력 항목이 다르고, 브랜드명·용량·성분 같은 항목은 직접 찾아 입력하기 번거롭습니다. Sppurt는 AI가 상품 상세페이지 이미지를 직접 읽어 브랜드명·규격·고시정보 등 누락 항목을 자동으로 채워 넣습니다.
 
 > *"한 번 입력하면 전 채널에 동시에 올라갑니다."*
 

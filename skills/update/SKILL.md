@@ -1,13 +1,13 @@
 ---
 name: sppt-update
 description: |
-  shopport CLI 버전 업데이트 + 릴리즈 노트 확인.
+  Sppurt CLI 버전 업데이트 + 릴리즈 노트 확인.
   Use when asked to "업데이트", "최신 버전", "sppt update", "버전 올려줘", "새 버전 있어?".
 ---
 
 # update
 
-shopport CLI를 최신 버전으로 업데이트하고 변경사항을 확인하는 워크플로우.
+Sppurt CLI를 최신 버전으로 업데이트하고 변경사항을 확인하는 워크플로우.
 
 ## When to use
 
@@ -26,7 +26,7 @@ sppt --version
 ### 2. 최신 버전 확인
 
 ```bash
-npm view shopport version
+npm view sppurt version
 ```
 
 현재 버전과 최신 버전을 비교합니다.
@@ -36,7 +36,7 @@ npm view shopport version
 ### 3. 업데이트 실행
 
 ```bash
-npm update -g shopport
+npm update -g sppurt
 ```
 
 설치 시 `postinstall` 훅이 자동으로 `setup-skills`를 실행하여 새 스킬도 함께 등록됩니다.
@@ -63,7 +63,7 @@ gh release view v<최신버전> --repo onlymytho/shopport
 ## 결과 요약 형식
 
 ```
-📦 shopport 업데이트 완료
+📦 Sppurt 업데이트 완료
 ────────────────────────────────────
 이전 버전:  v0.2.4
 현재 버전:  v0.3.0
@@ -77,6 +77,7 @@ gh release view v<최신버전> --repo onlymytho/shopport
 
 ## Notes
 
-- `npm update -g`가 안 되면 `npm install -g shopport@latest`로 시도
-- 권한 오류 시 `sudo npm update -g shopport` 또는 nvm/volta 사용 권장
+- 기존 `shopport` 패키지 사용자라면 한 번 `npm uninstall -g shopport` 후 `npm install -g sppurt`를 실행하세요. `sppt` 명령과 기존 사용자 데이터는 유지됩니다.
+- `npm update -g`가 안 되면 `npm install -g sppurt@latest`로 시도
+- 권한 오류 시 `sudo npm update -g sppurt` 또는 nvm/volta 사용 권장
 - 업데이트 후 스킬이 갱신되지 않으면 `sppt setup-skills` 수동 실행
