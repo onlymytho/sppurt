@@ -217,3 +217,18 @@ domemae (위탁), domeggook (사입), specialoffer, cjdropshipping, 1688
 
 ## 물류 채널
 dada-erp, ezadmin, onewms, sabangnet, boxhero, ecount-erp, douzone-wehago, playauto, argo, poomgo
+
+### Meta 광고·자동운영 및 프로모션 CLI
+
+- `sppt ads meta --help` — 계정·성과·손익·규칙·판단·승인·실행·감사 기록.
+- `sppt ads meta evaluations list --account <id> --all --json` — 전체 판단 이력(기록 날짜 필터 UTC).
+- `sppt ads meta rules get <id> --account <id> --json` / `rules versions <id> --account <id> --all --json` — 초안/게시/적용 버전.
+- 규칙은 `rules save --file <json>` → `preview` → `publish` → `bind` 순서. 수정에는 조회한 `--revision`, 적용에는 `--version`을 명시한다.
+- 승인 결정과 `execute`에는 조회·검토한 `--plan-hash`가 필요하다. 실행은 관리자·실행 scope·별도 서버 grant·한도를 모두 검증한다. 승인과 실행을 혼동하지 않는다.
+- `sppt ads meta sync --account <id> --from <date> --to <date>`와 `sppt cost sync meta-ads`는 수집/판단 결과를 표시하고 수동 경로에서 광고 변경을 실행하지 않는다.
+- `sppt ads meta executions reconcile <id> --account <id>` — 미확정 실행을 재조회한다. timeout을 이유로 execute를 자동 재전송하지 않는다.
+- `sppt promotions --help` — 행사 목록·생성·수정·preview·publish·cancel·archive·projection-runs. 변경은 `--idempotency-key`, 수정은 `--revision`, 게시는 `--preview-token`이 필요하다.
+- `sppt ads competitors --help` — 경쟁사 광고와 추적 브랜드. 자사 성과와 구분한다.
+- `sppt cap ads --json`, `sppt cap promotions --json` — 명령군 지원 범위.
+- 제한 토큰: `sppt auth token create --name <name> --scope ads:read,promotions:read` (기존 토큰 관리 권한 필요). 쓰기/실행은 별도 `ads:write`, `ads:execute`, `promotions:write`로 한정한다.
+- `--json`은 단일 JSON stdout, `--all`은 커서를 완주한다. 미확인/불완전/부분실패를 0이나 성공으로 취급하지 않는다. 광고·프로모션 원장은 cloud 전용이다.

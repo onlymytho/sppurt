@@ -109,3 +109,15 @@ sppt analytics cafe24 visitpaths [--type domains|ads|keywords] [--period 7d] [--
 판매 채널: cafe24, coupang, smartstore, shopify, toss-shopping, 29cm, musinsa
 소싱 채널: domemae, domeggook, specialoffer, cjdropshipping, 1688
 물류 채널: dada-erp, ezadmin, onewms, sabangnet, boxhero, ecount-erp, douzone-wehago, playauto, argo, poomgo
+
+### 광고·프로모션 운영
+
+`sppt ads meta --help`로 계정·성과·손익·규칙·판단·승인·실행·감사 기록을 조회/조정한다.
+전체 기록은 `--all --json`, 특정 계정은 `--account <id>`를 사용한다. 기록 날짜는 UTC다.
+규칙 변경은 조회 revision으로 저장→미리보기→게시→버전 적용 순서이며 자동 승인과 별개다.
+승인·실행에는 검토한 `--plan-hash`를 명시한다. 관리자/실행 scope/서버 grant/한도를
+우회하지 않으며 timeout 후에는 실행 기록 조회와 reconcile을 사용하고 실행을 재전송하지 않는다.
+수동 Meta sync는 수집·판단만 수행하며 광고 변경 실행은 별도 명령이다.
+`sppt promotions --help`는 행사 조회·생성·수정·미리보기·게시·취소·보관·투영작업 조회를 제공한다.
+변경은 멱등키, 수정은 revision, 게시는 previewToken을 사용한다. `sppt ads competitors --help`는
+경쟁사 광고/추적 설정이다. 최소권한 scope는 `ads:read/write/execute`, `promotions:read/write`다.
