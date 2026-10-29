@@ -1,13 +1,13 @@
 {
 	"name": "sppurt",
 	"description": "Sppurt — AI를 위한 이커머스 운영도구. 쿠팡, 스마트스토어, 카페24, Shopify의 주문·정산·재고·소싱을 관리합니다.",
-	"version": "0.1.12",
+	"version": "0.1.13",
 	"author": {
 		"name": "워킨온 (onlymytho)",
 		"email": "onlymytho@gmail.com"
 	},
 	"homepage": "https://shopport.vercel.app",
-	"repository": "https://github.com/onlymytho/shopport",
+	"repository": "https://github.com/onlymytho/sppurt",
 	"license": "MIT",
 	"keywords": [
 		"ecommerce",

@@ -52,7 +52,7 @@ sppt --version
 ### 5. 릴리즈 노트 확인
 
 ```bash
-gh release view v<최신버전> --repo onlymytho/shopport
+gh release view v<최신버전> --repo onlymytho/sppurt
 ```
 
 주요 변경사항을 사용자에게 요약해줍니다:
